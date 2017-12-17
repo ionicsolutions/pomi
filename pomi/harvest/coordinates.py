@@ -23,6 +23,7 @@ def lon_to_km(lon):
 
 
 def distance(lat0, lon0, lat1, lon1):
+    """This only works for small distances!"""
     return (lat0 - lat1)**2 + (lon0 - lon1)**2
 
 

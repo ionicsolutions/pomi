@@ -1,5 +1,6 @@
 """Find and collect Points of Mild Interest."""
 import math
+import json
 
 import pomi.harvest.osm as osm
 import pomi.harvest.coordinates as coord
@@ -16,12 +17,16 @@ LANGUAGES = ["de", "en"]
 
 class Collector:
 
-    def __init__(self):
-        """Mock-up database using a dictionary."""
-        self.pomis = {}
+    def __init__(self, fname=None):
+        """Basic storage of collected POMIs."""
+        if fname is None:
+            self.pomis = {}
+        else:
+            with open(fname, "r") as datafile:
+                self.pomis = json.load(datafile)
 
     def add(self, pomis):
-        self.pomis.update({pomi["id"]: pomi for pomi in pomis})
+        self.pomis.update({str(pomi["id"]): pomi for pomi in pomis})
 
     def __len__(self):
         return len(self.pomis)
@@ -29,6 +34,10 @@ class Collector:
     def all(self):
         for pomi in self.pomis.values():
             yield pomi
+
+    def dump(self, fname):
+        with open(fname, "w") as datafile:
+            json.dump(self.pomis, datafile, indent=4)
 
 
 def collect_pomis_along_route(waypoints, box_size=DEFAULT_LENGTH,
