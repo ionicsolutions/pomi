@@ -52,7 +52,8 @@ def extract_pomis(response, require_tags=(), collect_tags=()):
         if not node["type"] == "node":
             continue
 
-        pomi = {"lat": float(node["lat"]),
+        pomi = {"id": int(node["id"]),
+                "lat": float(node["lat"]),
                 "lon": float(node["lon"])}
 
         if collect_tags:
