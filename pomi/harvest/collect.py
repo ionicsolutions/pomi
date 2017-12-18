@@ -3,7 +3,7 @@ import math
 import json
 
 import pomi.harvest.osm as osm
-import pomi.harvest.coordinates as coord
+import pomi.coordinates as coord
 
 # TODO: Move to configuration file
 # search parameters, need to be optimized

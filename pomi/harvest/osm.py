@@ -1,7 +1,7 @@
 """Find Points of Mild Interest on OpenStreetMap using the Overpass API."""
 import requests
 import urllib.parse
-from pomi.harvest.coordinates import calculate_box
+from pomi.coordinates import calculate_box
 
 __all__ = ["get_pomis"]
 

@@ -1,11 +1,12 @@
 import sqlite3
 import json
 
-from pomi.harvest.coordinates import calculate_box, distance
+from pomi.coordinates import calculate_box, distance
 
 # TODO: Move to configuration file/some common place
 TYPES = ["biography", "heritage", "geography"]
 
+MAX_BOX_SIZE = 20
 
 class Database:
     """In-memory SQLite database to store POMIs for fast searching.
@@ -59,6 +60,8 @@ class Database:
             if type_ not in TYPES:
                 raise ValueError("Unknown type '{:s}'.".format(type_))
 
+        box_size = max(box_size, MAX_BOX_SIZE)
+
         lat0, lon0, lat1, lon1 = calculate_box(lat, lon, box_size)
 
         self.c.execute("""SELECT * FROM pomis WHERE
@@ -66,7 +69,7 @@ class Database:
                        (lat0, lat1, lon0, lon1))
         query_result = self.c.fetchall()
 
-        result = [(row[0], distance(lat, lon, row[1], row[2]))
+        result = [(str(row[0]), distance(lat, lon, row[1], row[2]))
                   for row in query_result
                   if row[3] in types]
         result.sort(key=lambda x: x[1])

@@ -6,6 +6,7 @@ OVERLAP_THRESHOLD = 0.8
 # Earth's perimeter is 40.008 km -> 40.008 km/360° = 113.13 km/°
 # see http://www.iaktueller.de/exx.php
 
+
 def km_to_lat(length, lat):
     return length / (111.13 * math.cos(lat / 180 * math.pi))
 
